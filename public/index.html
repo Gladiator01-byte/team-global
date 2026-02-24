@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Offline Attendance Queue</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: #f4f6f8;
+      }
+      .panel {
+        max-width: 700px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+      .offline-banner {
+        display: none;
+        background: #b91c1c;
+        color: white;
+        padding: 10px;
+        border-radius: 6px;
+        margin-bottom: 16px;
+      }
+      .offline-banner.visible {
+        display: block;
+      }
+      form {
+        display: grid;
+        gap: 12px;
+      }
+      input,
+      select,
+      button {
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #d0d7de;
+      }
+      button {
+        cursor: pointer;
+        background: #2563eb;
+        color: white;
+      }
+      .meta {
+        margin-top: 16px;
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+      .pill {
+        background: #eef2ff;
+        color: #3730a3;
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 14px;
+      }
+      #progressBar {
+        width: 100%;
+        height: 10px;
+        margin-top: 12px;
+      }
+      #toast {
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        background: #111827;
+        color: white;
+        padding: 10px 14px;
+        border-radius: 8px;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+      #toast.visible {
+        opacity: 1;
+      }
+      #reconciliation {
+        margin-top: 14px;
+        max-height: 220px;
+        overflow: auto;
+      }
+      .status-created { color: #166534; }
+      .status-duplicate { color: #92400e; }
+      .status-failed { color: #b91c1c; }
+    </style>
+  </head>
+  <body>
+    <main class="panel">
+      <h1>Attendance Scanner</h1>
+      <div id="offlineBanner" class="offline-banner">Offline mode: submissions are queued locally.</div>
+      <form id="attendanceForm">
+        <input id="studentId" name="studentId" placeholder="Student ID" required />
+        <select id="eventType" name="eventType" required>
+          <option value="check-in">Check-in</option>
+          <option value="check-out">Check-out</option>
+        </select>
+        <input id="scannerId" name="scannerId" placeholder="Scanner ID (optional)" />
+        <button type="submit">Submit Attendance</button>
+      </form>
+      <div class="meta">
+        <div class="pill">Queued: <strong id="queuedCount">0</strong></div>
+        <div class="pill">Sync: <strong id="syncState">idle</strong></div>
+      </div>
+      <progress id="progressBar" value="0" max="100"></progress>
+      <ul id="reconciliation"></ul>
+    </main>
+    <div id="toast"></div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
