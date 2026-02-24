@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>TeamGlobal Attendance PWA</title>
+</head>
+<body>
+  <main class="container">
+    <header class="card">
+      <h1>TeamGlobal Attendance</h1>
+      <p>Mobile-first attendance with dynamic QR + geofence + passkey.</p>
+      <div class="row">
+        <button id="installBtn" class="secondary">Install PWA</button>
+        <button id="themeBtn" class="secondary">Toggle Theme</button>
+      </div>
+    </header>
+
+    <section class="card">
+      <div class="tabs">
+        <button class="tab active" data-tab="auth">Auth</button>
+        <button class="tab" data-tab="employee">Employee</button>
+        <button class="tab" data-tab="leader">Leader/Admin</button>
+        <button class="tab" data-tab="reports">Reports</button>
+      </div>
+
+      <div id="auth" class="panel active">
+        <h2>Login / Registration</h2>
+        <form id="authForm">
+          <label>Name <input required id="name" placeholder="Amina Yusuf" /></label>
+          <label>Role
+            <select id="role">
+              <option value="employee">Employee</option>
+              <option value="leader">Team Leader</option>
+              <option value="admin">Admin</option>
+              <option value="delegate">Delegate</option>
+            </select>
+          </label>
+          <label>Team ID <input id="teamId" value="TEAM-LAGOS-1" /></label>
+          <div class="row">
+            <button type="button" id="registerPasskey">Register Passkey</button>
+            <button type="button" id="signinPasskey" class="secondary">Sign in Passkey</button>
+          </div>
+        </form>
+        <p id="authState" class="status"></p>
+      </div>
+
+      <div id="employee" class="panel">
+        <h2>Employee Home</h2>
+        <p id="whoami"></p>
+        <div class="grid2">
+          <div>
+            <label>Scan QR Payload<input id="scanInput" placeholder='Paste dynamic QR JSON' /></label>
+            <button id="scanBtn">Validate QR + Geofence + Biometric</button>
+            <p id="scanStatus" class="status"></p>
+          </div>
+          <div>
+            <h3>My Logs (WAT)</h3>
+            <ul id="myLogs"></ul>
+          </div>
+        </div>
+      </div>
+
+      <div id="leader" class="panel">
+        <h2>Team Leader / Admin</h2>
+        <button id="startQr">Start QR Display</button>
+        <button id="pauseQr" class="secondary">Pause</button>
+        <button id="stopQr" class="secondary">Stop</button>
+        <p id="qrMeta" class="status"></p>
+        <div id="qrFull" class="qr-box">
+          <canvas id="qrCanvas" width="256" height="256"></canvas>
+          <code id="qrPayload"></code>
+        </div>
+      </div>
+
+      <div id="reports" class="panel">
+        <h2>Dashboard Reports</h2>
+        <div class="row">
+          <button id="exportCsv">Export CSV</button>
+          <input type="file" id="importCsv" accept=".csv" />
+        </div>
+        <table>
+          <thead><tr><th>User</th><th>Team</th><th>Type</th><th>Time (WAT)</th><th>Anomaly</th></tr></thead>
+          <tbody id="reportBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
