@@ -1,0 +1,10 @@
+{
+  "name": "team-global-attendance",
+  "version": "1.0.0",
+  "description": "Offline-capable attendance submission demo",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  }
+}
